@@ -1,6 +1,9 @@
 import { password } from 'bun';
 import express from 'express';
 import postgres from 'postgres';
+import { validateUser } from './validations';
+import type { Request, Response, NextFunction } from 'express';
+
 
 const app = express();
 
@@ -17,7 +20,7 @@ const sql = postgres({
 
 const newUser = await sql`INSERT INTO users (username, password) VALUES ('Renato', 'ren123');`
 
-app.post('/login/unsafe', async (req, res, next) =>{
+app.post('/login/unsafe', validateUser, async (req: Request, res: Response, next: NextFunction) =>{
     const { username, password } = req.body;
     try {
 

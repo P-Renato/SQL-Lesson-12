@@ -17,6 +17,7 @@ export const validateUser = [
 
   (req: Request, res: Response, next: NextFunction) => {
     const results = validationResult(req);
+    console.log(typeof results)
 
     results.isEmpty() ? next() : res.status(422).send((results as any).errors);
   },
